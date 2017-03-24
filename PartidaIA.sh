@@ -28,7 +28,7 @@ do
 			4)
 				bucle=1
 				
-				Usuaris/$nom.sh 
+				./pedrapapertisores.sh $nom
 			;;
 			*)
 				echo "T'has equivocat! "
