@@ -28,7 +28,7 @@ case $a in
 		echo "Contrasenya: "
 		read p
 
-		echo "$n $p" >> BaseDeDades.txt
+		echo "$n $p 0" >> BaseDeDades.txt
 		touch Usuaris/$n.sh
 		chmod 777 Usuaris/*.sh
 		\usuari > Usuaris/$n.sh

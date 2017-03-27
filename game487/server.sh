@@ -1,4 +1,3 @@
-
 nom=$1
 	#1 pedra
 	#2 paper
