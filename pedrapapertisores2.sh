@@ -12,16 +12,19 @@ case $a in
 		read I
 		echo "Contrasenya: "
 		read C
-
+		
 		#comprovar si la contrasenya es correcta
 		psswd=`grep ^$I BaseDeDades.txt | cut -d" " -f2`
-		if [[ "$psswd" = "$C" ]]; then
-				#statements
-				echo "Conectat"
-				eixir=1
-				./Usuaris/$I.sh $I
-			else
-				echo "Contrasenya incorrecta"
+		
+			if [[ "$psswd" = "$C" ]]; then
+					#statements
+					echo "Conectat"
+					eixir=1
+					usuari > Usuaris/$I.sh
+					./Usuaris/$I.sh $I
+				else
+					echo "Contrasenya incorrecta"
+			
 		fi
 	;;
 	s)
@@ -32,14 +35,17 @@ case $a in
 
 		#comprovar si la contrasenya es correcta
 		psswd=`grep ^$I BaseDeDades.txt | cut -d" " -f2`
-		if [[ "$psswd" = "$C" ]]; then
-				#statements
-				echo "Conectat"
-				eixir=1
-				./Usuaris/$I.sh $I
-			else
-				echo "Contrasenya incorrecta"
-		fi
+		
+			if [[ "$psswd" = "$C" ]]; then
+					#statements
+					echo "Conectat"
+					eixir=1
+					usuari > Usuaris/$I.sh
+					./Usuaris/$I.sh $I
+				else
+					echo "Contrasenya incorrecta"
+			fi
+		
 	;;
 	
 	n)
@@ -49,12 +55,26 @@ case $a in
 		echo "Contrasenya: "
 		read p
 
-		echo "$n $p" >> BaseDeDades.txt
+					
+		
+		NomDeLaBaseDeDades=`grep ^$n BaseDeDades.txt | cut -d" " -f1`
+		if [ "$NomDeLaBaseDeDades" = "$n" ] 
+		then
+			echo "Ho sentim, però el nom ja està en ús :("
+			read kjlsdf
+					
+			
+		else
+		
+
+
+		echo "$n $p 0" >> BaseDeDades.txt
 		touch Usuaris/$n.sh
 		chmod 777 Usuaris/*.sh
 		usuari > Usuaris/$n.sh
 		eixir=1
 		./Usuaris/$n.sh $n
+		fi
 	;;
 	N)
 		echo "Crea nom d'usuari: "
@@ -63,12 +83,27 @@ case $a in
 		echo "Contrasenya: "
 		read p
 
-		echo "$n $p" >> BaseDeDades.txt
+
+					
+		
+		NomDeLaBaseDeDades=`grep ^$n BaseDeDades.txt | cut -d" " -f1`
+		if [ "$NomDeLaBaseDeDades" = "$n" ] 
+		then
+			echo "Ho sentim, però el nom ja està en ús :("
+			read kjlsdf
+					
+			
+		else
+		
+
+
+		echo "$n $p 0" >> BaseDeDades.txt
 		touch Usuaris/$n.sh
 		chmod 777 Usuaris/*.sh
 		usuari > Usuaris/$n.sh
 		eixir=1
 		./Usuaris/$n.sh $n
+		fi
 	;;
 	*)
 		echo "Introducció incorrecta"

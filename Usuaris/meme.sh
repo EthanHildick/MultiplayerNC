@@ -28,7 +28,7 @@ echo "
 	
 						3.- TRES EN RALLA 
 	
-						4.- ONE PUNCH
+						4.- 
 						
 						5.- KIT DE DESARROLLO
 
@@ -70,7 +70,6 @@ read tria
 			
 			4)
 				elegirjoc=1
-				./OnePunch/OnePunch.sh $nom
 			;;
 			
 			5)
@@ -85,6 +84,7 @@ read tria
 
 			7)
 				elegirjoc=1
+				break
 			;;
 
 			coljo) #Easter Egg salvatge

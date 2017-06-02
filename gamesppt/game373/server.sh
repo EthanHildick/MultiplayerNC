@@ -1,68 +1,5 @@
-function jugador 
-{
-echo '
 nom=$1
 aleatorio=$2
-	echo "
-	1-Pedra
-	2-Paper
-	3-Tisores
-	4-Eixir"
-	asdf=0
-		while [ $asdf -eq 0 ]
-		do
-		read eleccio
-			case $eleccio in 
-		
-				1)
-					jugador=1
-					asdf=1 
-				;;
-				2)
-					jugador=2
-					asdf=1 
-				;;
-				3)
-					jugador=3
-					asdf=1
-				;; 
-				4)
-					cd ../..
-					./pedrapapertisores.sh $nom	
-				;;
-				*)
-					echo "Elecció errónea, torna-ho a intentar"
-				;;
-			esac
-		done
-	echo "$nom $jugador" >> eleccio.txt
-	./carga.sh $nom $aleatorio'
-}
-
-function cargapedrapapertisores
-{
-echo 'rm -rf eleccions.txt
-nom=$1
-aleatorio=$2
-echo
-echo "Enviat!"
-echo
-echo "Esperant..."
-linies=`cat eleccio.txt | wc -l`
-
-while [[ $linies -eq 1 ]]; do
-	linies=`cat eleccio.txt | wc -l`
-done
-
-if [[ $linies -eq 2 ]]; then
-	./server.sh $nom $aleatorio
-fi'
-}
-
-function server
-{
-echo "nom=\$1
-aleatorio=\$2
 	#1 pedra
 	#2 paper
 	#3 tisores
@@ -71,11 +8,11 @@ aleatorio=\$2
 	#2 < 3
 	#3 < 1
 
-	jugador1=\`cat eleccio.txt | grep ^\$nom | cut -d' ' -f2\`
-	jugador2=\`cat eleccio.txt | grep -v ^\$nom | cut -d' ' -f2\`
+	jugador1=`cat eleccio.txt | grep ^$nom | cut -d' ' -f2`
+	jugador2=`cat eleccio.txt | grep -v ^$nom | cut -d' ' -f2`
 
-	if [[ \$jugador1 = 1 ]]; then
-			if [[ \$jugador2 = \$jugador1 ]]; then
+	if [[ $jugador1 = 1 ]]; then
+			if [[ $jugador2 = $jugador1 ]]; then
 echo '
 ........................................				........................................
 ........................................				........................................
@@ -97,7 +34,7 @@ echo '
 				echo 'Empate'
 				resultat=0
 			fi
-			if [[ \$jugador2 =  2 ]]; then
+			if [[ $jugador2 =  2 ]]; then
 echo '
 ........................................		....................		...WWWWWWWWWWWWWWWWWWWWWWW@...
 ........................................		............####....		...WWWWWWWWWWWWWWWWWWWWWWW@...
@@ -118,7 +55,7 @@ echo '
 				echo 'Has perdut!'
 				resultat=0
 			fi
-			if [[ \$jugador2 =  3 ]]; then
+			if [[ $jugador2 =  3 ]]; then
 echo '
 ........................................		....................		....................
 ........................................		....####............		....................
@@ -142,8 +79,8 @@ echo '
 			fi
 	fi
 
-	if [[ \$jugador1 = 2 ]]; then
-			if [[ \$jugador2 = \$jugador1 ]]; then
+	if [[ $jugador1 = 2 ]]; then
+			if [[ $jugador2 = $jugador1 ]]; then
 echo '
 ...WWWWWWWWWWWWWWWWWWWWWWW@...				...WWWWWWWWWWWWWWWWWWWWWWW@...
 ...WWWWWWWWWWWWWWWWWWWWWWW@...				...WWWWWWWWWWWWWWWWWWWWWWW@...
@@ -165,7 +102,7 @@ echo '
 				echo 'Empate'
 				resultat=0
 			fi
-			if [[ \$jugador2 =  1 ]]; then
+			if [[ $jugador2 =  1 ]]; then
 echo '
 ...WWWWWWWWWWWWWWWWWWWWWWW@...		....................		........................................
 ...WWWWWWWWWWWWWWWWWWWWWWW@...		....####............		........................................
@@ -187,7 +124,7 @@ echo '
 				echo 'Has guanyat!'
 				resultat=1
 			fi
-			if [[ \$jugador2 =  3 ]]; then
+			if [[ $jugador2 =  3 ]]; then
 echo '
 ...WWWWWWWWWWWWWWWWWWWWWWW@...		....................		....................
 ...WWWWWWWWWWWWWWWWWWWWWWW@...		............####....		....................
@@ -211,8 +148,8 @@ echo '
 			fi
 	fi
 
-	if [[ \$jugador1 = 3 ]]; then
-			if [[ \$jugador2 = \$jugador1 ]]; then
+	if [[ $jugador1 = 3 ]]; then
+			if [[ $jugador2 = $jugador1 ]]; then
 echo '
 ....................						....................
 ....................						....................
@@ -234,7 +171,7 @@ echo '
 				echo 'Empate'
 				resultat=0
 			fi
-			if [[ \$jugador2 =  2 ]]; then
+			if [[ $jugador2 =  2 ]]; then
 echo '
 ....................		....................		...WWWWWWWWWWWWWWWWWWWWWWW@...
 ....................		....####............		...WWWWWWWWWWWWWWWWWWWWWWW@...
@@ -256,7 +193,7 @@ echo '
 				echo 'Has guanyat!'
 				resultat=1
 			fi
-			if [[ \$jugador2 =  1 ]]; then
+			if [[ $jugador2 =  1 ]]; then
 echo '
 ....................		....................		........................................
 ....................		............####....		........................................
@@ -280,15 +217,15 @@ echo '
 			fi
 	fi
 echo
-awk '\$1==N{\$3+=R}1' N=\$nom R=\$resultat ../../BaseDeDades.txt > ../../BaseDeDades.tmp
+awk '$1==N{$3+=R}1' N=$nom R=$resultat ../../BaseDeDades.txt > ../../BaseDeDades.tmp
 	mv ../../BaseDeDades.tmp ../../BaseDeDades.txt
 
 echo 'Altra?[S/n]'
 	jugar=0
-	while [ \$jugar -eq 0 ]
+	while [ $jugar -eq 0 ]
 	do
 		read altra
-		case \$altra in
+		case $altra in
 			S)
 			jugaraltra=1
 			jugar=1
@@ -310,207 +247,6 @@ echo 'Altra?[S/n]'
 			;;
 		esac
 	done
-echo \$nom \$jugaraltra >> eleccions.txt
-	./cargapedrapapertisoreseleccions.sh \$nom \$aleatorio
-"
-}
-
-function cargapedrapapertisoreseleccions
-{
-echo '
-rm -rf eleccio.txt
-nom=$1
-aleatorio=$2
-echo
-echo -e "\e[33mEnviat!\e[0m"
-echo
-echo -e "\e[33mEsperant...\e[0m"
-linies=`cat eleccions.txt | wc -l`
-
-while [[ $linies -eq 1 ]]; do
-	linies=`cat eleccions.txt | wc -l`
-done
-
-if [[ $linies -eq 2 ]]; then
-	./continuarono.sh $nom $aleatorio
-fi'
-}
-
-function continuarono 
-{
-
-echo 'nom=$1
-aleatorio=$2
-eleccio1=`cat eleccions.txt | grep ^$nom | cut -d" " -f2`
-eleccio2=`cat eleccions.txt | grep -v ^$nom | cut -d" " -f2`
-
-elecciodefinitiva=`expr $eleccio1 \* $eleccio2`
-
-case $elecciodefinitiva in
-	0)
-	echo "Partida cancelada!"
-	read lkajhsdfdhasf
-	cd ../..
-	rm -r gamesppt/game$aleatorio	
-	./pedrapapertisores.sh $nom
-	;;
-	
-	1)
-	echo "Partida acceptada!"
-	read lakshlfkdhsf
-	./$nom.sh $nom $aleatorio
-	;;
-esac'
-
-}
-
-function pedrapapertisores
-{
-echo 'nom=$1
-	source functions.txt
-
-	echo "---MENU---
-	1- Contra ordinador
-	2- Crear partida
-	3- Buscar partida"
-	read a
-
-	case $a in
-		1)
-			./PartidaIA.sh $nom
-		;;
-
-		2)
-			aleatorio=`echo $((1+$RANDOM%1000))`
-			echo "Nº de partida: $aleatorio"
-			mkdir game$aleatorio
-			cd game$aleatorio
-			touch $nom.sh server.sh carga.sh
-			chmod 777 *.sh
-			jugador > $nom.sh
-			server > server.sh
-			carga > carga.sh
-			cargapedrapapertisoreseleccions > cargapedrapapertisoreseleccions.sh
-			continuarono > continuarono.sh
-			./$nom.sh $nom $aleatorio
-		;;
-
-		3)
-			echo -n "Introdueix el Nº de partida: "
-			read key
-			cd game$key
-			touch $nom.sh
-			chmod 777 *.sh
-			jugador > $nom.sh
-			./$nom.sh $nom $key
-		;;
-	esac'
-}
-
-
-function usuari
-{
-
-echo 'nom=$1
-echo "
-		{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[
-
-		>>>							         	       <<<
-		>>>>>>					                                    <<<<<<
-		>>>>>>>>>                                                                <<<<<<<<<
-		>>>>>>>>>>>>                                                          <<<<<<<<<<<<
-		>>>>>>>>>>>>>>>       	    __  __ ______ _   _ _ // _             <<<<<<<<<<<<<<<
-		>>>>>>>>>>>>>>>>>>    	   |  \/  |  ____| \ | | |  | |         <<<<<<<<<<<<<<<<<<
-		>>>>>>>>>>>>>>>>>>    	   | \  / | |__  |  \| | |  | |         <<<<<<<<<<<<<<<<<<
-		>>>>>>>>>>>>>>>       	   | |\/| |  __| | . | | |  | |            <<<<<<<<<<<<<<<
-		>>>>>>>>>>>>          	   | |  | | |____| |\  | |__| |               <<<<<<<<<<<<
-		>>>>>>>>>             	   |_|  |_|______|_| \_|\____/                   <<<<<<<<<
-		>>>>>>                                                                      <<<<<<
-		>>>                                                                  	       <<<
-                
-		|********************************************************************************|
-		|///////////////////////////{[TRIA EL TEU JOC FAVORIT]}//////////////////////////|
-		|********************************************************************************|
-	
-
-		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}}{}{}{}{}{}{}{}{}{}{}{{}{}{}{}{}{}{}{}{}{}
-		|/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*|
-						1.- PEDRA PAPER TISORES
-
-						2.- BINGO
-	
-						3.- TRES EN RALLA 
-	
-						4.- ONE PUNCH
-						
-						5.- KIT DE DESARROLLO
-
-						6.- TABLA DE PUNTUACIÓ
-						
-						7.- EIXIR 
-		|/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*|
-		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}}{}{}{}{}{}{}{}{}{}{}{{}{}{}{}{}{}{}{}{}{}	
-	   		  __  __       _ _   _       _                       _   _  _____ 
-		         |  \/  |     | | | (_)     | |                     | \ | |/ ____|
-		         | \  / |_   _| | |_ _ _ __ | | __ _ _   _  ___ _ __|  \| | |     
-		         | |\/| | | | | | __| | |_ \| |/ _| | | | |/ _ \ |__| . | | |     
-		         | |  | | |_| | | |_| | |_) | | (_| | |_| |  __/ |  | |\  | |____ 
-		         |_|  |_|\__,_|_|\__|_| |__/|_|\__,_|\__, |\___|_|  |_| \_|\_____|
-		                              | |             __/ |                       
-		                              |_|            |___/                        
-
-		{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]}{[]"
-
-elegirjoc=0
-while [ $elegirjoc -eq 0 ]
-do
-read tria
-	case $tria in
-			1)
-				elegirjoc=1
-				./pedrapapertisores.sh $nom
-			;;
-
-			2)
-				elegirjoc=1
-				./bingo.sh $nom
-			;;
-		
-			3)
-				elegirjoc=1
-				./tresenralla/tresenralla.sh $nom
-			;;
-			
-			4)
-				elegirjoc=1
-				./OnePunch/OnePunch.sh $nom
-			;;
-			
-			5)
-				elegirjoc=1
-				./KitDeDesarrollo.sh
-			;;
-
-			6)
-				elegirjoc=1
-				./tabla.sh $nom
-			;;
-
-			7)
-				elegirjoc=1
-			;;
-
-			coljo) #Easter Egg salvatge
-				elegirjoc=1
-				./../../Baixades/factorio/bin/x64/factorio
-			;;
-			
-			*)
-				echo "Opció incorrecta"
-			;;
-		
-	esac
-
-done'
-}
+echo $nom $jugaraltra >> eleccions.txt
+	./cargapedrapapertisoreseleccions.sh $nom $aleatorio
 
